@@ -1,15 +1,10 @@
+import { config} from "dotenv"
 import express from "express";
-import services from "./services/index.services"
+// import services from "./services/index.services"
+// import {dbconfig } from "./db/index.db"
 
-const newService = new services()
-
+config()
 const app = express()
 
-
-
-function greet (name: string):string {
-  return name
-}
-
-app.listen(4000, () => console.log(newService.getUser("Akinola")))
-// console.log(greet("Akinola"))
+// dbconfig("","localhost", "", "thegreatest22", 5432)
+app.listen(4000, () => console.log("=== server started ==="))
