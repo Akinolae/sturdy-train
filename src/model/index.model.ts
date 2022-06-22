@@ -2,9 +2,9 @@
 // on the NODE_ENV
 
 const modelConfiy = (devEnv: string): void => {
-    if (devEnv === "developent") {
-        console.log(devEnv)
-    } else {
-        console.log("production")
-    }
+  if (devEnv === 'developent') {
+    console.log(devEnv)
+  } else {
+    console.log('production')
+  }
 }

@@ -1,18 +1,23 @@
-import { Client } from "pg"
+import { Client } from 'pg'
 
+const dbconfig = (
+  user: string,
+  host: string,
+  database: string,
+  password: string,
+  port: number
+) => {
+  const client = new Client({
+    user,
+    host,
+    database,
+    password,
+    port,
+  })
 
-const dbconfig = (user: string, host: string, database: string, password: string, port: number ) => {
-    const client = new Client({
-        user,
-        host,
-        database,
-        password,
-        port
-    })
+  client.connect()
 
-    client.connect()
-
-    return client
+  return client
 }
- 
+
 export { dbconfig }
