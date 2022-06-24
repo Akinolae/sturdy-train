@@ -1,7 +1,9 @@
 import { response } from '../utils/index.utils'
 import { StatusCodes } from 'http-status-codes'
+import { delivery } from './index.controller'
+import pg from '../utils/knexConfig'
 
-class Riders {
+class Rider {
   /**
    * register rider
    */
@@ -31,9 +33,23 @@ class Riders {
       })
     }
   }
+
+  /**
+   * Get current order
+   */
+  public currentOrder() {
+    try {
+      const allDeliveries = delivery.allOrders()
+    } catch (error) {}
+  }
+
+  /**
+   * cancelOrder
+   */
+  public cancelOrder() {}
 }
 
-const rider = new Riders()
+const rider = new Rider()
 Object.freeze(rider)
 
 export { rider }
