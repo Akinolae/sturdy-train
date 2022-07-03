@@ -1,13 +1,13 @@
 import { response } from '../utils/index.utils'
 import { StatusCodes } from 'http-status-codes'
 import { delivery } from './index.controller'
-import pg from '../utils/knexConfig'
+import pg from '../db/index.db'
 
 class Rider {
   /**
    * register rider
    */
-  public register = async (req: any, res: any) => {
+  public register = async (req: any, res: any): Promise<void> => {
     const { email, name } = req.body
     try {
       if (!email || !name) {
@@ -18,6 +18,7 @@ class Rider {
           res,
         })
       } else {
+        await pg('Riders').insert({})
         response({
           message: req.body,
           status: true,
@@ -28,7 +29,7 @@ class Rider {
       response({
         code: StatusCodes.INTERNAL_SERVER_ERROR,
         message: error.message,
-        status: true,
+        status: false,
         res,
       })
     }

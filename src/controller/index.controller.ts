@@ -1,7 +1,3 @@
-interface Orders {
-  order: object
-}
-
 class Deliveries {
   /**
    * allOrders

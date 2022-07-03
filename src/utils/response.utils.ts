@@ -1,11 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-interface Response {
-  message: any
-  status: boolean
-  code?: number
-  res: any
-  data?: any
-}
+import { Response } from './types.utils'
 
 const response = ({
   code = StatusCodes.OK,

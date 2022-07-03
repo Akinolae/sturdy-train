@@ -1,23 +1,6 @@
-import { Client } from 'pg'
+import config from '../knexfile'
+import knex from 'knex'
 
-const dbconfig = (
-  user: string,
-  host: string,
-  database: string,
-  password: string,
-  port: number
-) => {
-  const client = new Client({
-    user,
-    host,
-    database,
-    password,
-    port,
-  })
+const knexConfig = knex(config.development)
 
-  client.connect()
-
-  return client
-}
-
-export { dbconfig }
+export default knexConfig
