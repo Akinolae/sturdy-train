@@ -1,5 +1,5 @@
-"use strict";
+'use strict'
 function greet(name) {
-    return name;
+  return name
 }
-console.log(greet("Akinola"));
+console.log(greet('Akinola'))

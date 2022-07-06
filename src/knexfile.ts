@@ -6,15 +6,16 @@ config()
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
+ *
  */
 export default {
   development: {
-    client: 'pg',
+    client: 'postgresql',
     connection: {
       host: 'localhost',
+      database: process.env.DB,
       user: 'postgres',
       password: process.env.PASSWORD,
-      database: process.env.DB,
     },
     pool: {
       min: 2,

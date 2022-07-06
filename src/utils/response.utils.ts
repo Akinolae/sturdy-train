@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import { Response } from './types.utils'
+import { Response } from '../interfaces/index.interfaces'
 
 const response = ({
   code = StatusCodes.OK,

@@ -1,16 +1,30 @@
+import { config } from 'dotenv'
+import { delivery } from './index.controller'
 import { response } from '../utils/index.utils'
 import { StatusCodes } from 'http-status-codes'
-import { delivery } from './index.controller'
-import pg from '../db/index.db'
+import DynamoInit from '../db/dynamo.db'
+
+config()
+
+const db = new DynamoInit(
+  {
+    accessKeyId: String(process.env.ACCESSKEY),
+    region: String(process.env.REGION),
+    secretKey: String(process.env.SECRETEKEY),
+    version: 'latest',
+  },
+  'riders'
+)
 
 class Rider {
   /**
    * register rider
    */
+
   public register = async (req: any, res: any): Promise<void> => {
-    const { email, name } = req.body
+    const { email, firstName, lastName, surName, password, location } = req.body
     try {
-      if (!email || !name) {
+      if (!email || !firstName) {
         response({
           code: StatusCodes.UNPROCESSABLE_ENTITY,
           message: 'email and name is required',
@@ -18,9 +32,15 @@ class Rider {
           res,
         })
       } else {
-        await pg('Riders').insert({})
+        const resp = await db.getItem({
+          key: 'rider_id',
+          value: {
+            S: 1,
+          },
+        })
+
         response({
-          message: req.body,
+          message: resp,
           status: true,
           res,
         })
@@ -28,7 +48,7 @@ class Rider {
     } catch (error: any) {
       response({
         code: StatusCodes.INTERNAL_SERVER_ERROR,
-        message: error.message,
+        message: error.message || error,
         status: false,
         res,
       })
