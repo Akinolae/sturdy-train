@@ -106,17 +106,16 @@ class DynamoInit {
     const db = new Aws.DynamoDB()
     const data = {
       TableName: this.table,
-
       Key: {
-        [params.key]: String(params.value),
+        [params.key]: params.value,
       },
     }
 
     try {
       if (await this.hasTable()) {
-        res = await db.query(data).promise()
+        res = await db.getItem(data).promise()
       }
-      return res
+      return res?.Item
     } catch (error) {
       throw error
     }

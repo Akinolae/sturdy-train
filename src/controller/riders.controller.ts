@@ -33,17 +33,39 @@ class Rider {
         })
       } else {
         const resp = await db.getItem({
-          key: 'rider_id',
+          key: 'rider_email',
           value: {
-            S: 1,
+            S: email,
           },
         })
+        const data = !resp ? {} : resp
+        const hasValues =
+          typeof resp !== undefined && Object.keys(data).length >= 1
+        if (!hasValues) {
+          await db.createNewItem({
+            item: {
+              rider_email: { S: email },
+              lastName: { S: lastName },
+              firstName: { S: firstName },
+              surName: { S: surName },
+              location: { S: location },
+              password: { S: password },
+            },
+          })
 
-        response({
-          message: resp,
-          status: true,
-          res,
-        })
+          response({
+            message: 'Registration was successful',
+            status: true,
+            res,
+          })
+        } else {
+          response({
+            message: `user with ${email} already exists`,
+            status: true,
+            code: StatusCodes.UNPROCESSABLE_ENTITY,
+            res,
+          })
+        }
       }
     } catch (error: any) {
       response({
