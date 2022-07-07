@@ -55,12 +55,17 @@ class DynamoInit {
     }
   }
 
-  public getAllTableItems = async (): Promise<void> => {
+  public getAllTableItems = async (): Promise<any> => {
     this.dynamoConfig()
+    const data = {
+      TableName: this.table,
+    }
+    const db = new Aws.DynamoDB()
     const tableExists = await this.hasTable()
     if (!tableExists) return
     else {
-      console.log('Table exists')
+      const resp = await db.scan(data).promise()
+      return !!resp.Items?.length ? resp.Items : []
     }
   }
 

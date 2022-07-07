@@ -32,6 +32,8 @@ class Rider {
           res,
         })
       } else {
+        const dt = await db.getAllTableItems()
+        console.log(dt)
         const resp = await db.getItem({
           key: 'rider_email',
           value: {
@@ -39,6 +41,7 @@ class Rider {
           },
         })
         const data = !resp ? {} : resp
+
         const hasValues =
           typeof resp !== undefined && Object.keys(data).length >= 1
         if (!hasValues) {
