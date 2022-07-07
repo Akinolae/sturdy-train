@@ -32,14 +32,11 @@ class Rider {
           res,
         })
       } else {
-        const dt = await db.getAllTableItems()
-        console.log(dt)
         const resp = await db.getItem({
           key: 'rider_email',
-          value: {
-            S: email,
-          },
+          value: email,
         })
+
         const data = !resp ? {} : resp
 
         const hasValues =
@@ -47,12 +44,12 @@ class Rider {
         if (!hasValues) {
           await db.createNewItem({
             item: {
-              rider_email: { S: email },
-              lastName: { S: lastName },
-              firstName: { S: firstName },
-              surName: { S: surName },
-              location: { S: location },
-              password: { S: password },
+              rider_email: email,
+              lastName: lastName,
+              firstName: firstName,
+              surName: surName,
+              location: location,
+              password: password,
             },
           })
 

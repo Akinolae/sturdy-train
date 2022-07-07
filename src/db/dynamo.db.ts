@@ -18,7 +18,6 @@ class DynamoInit {
       credentials: {
         accessKeyId: accessKeyId,
         secretAccessKey: secretKey,
-        sessionToken: '',
       },
     })
 
@@ -29,7 +28,7 @@ class DynamoInit {
     this.dynamoConfig()
 
     /*
-        checks is the table specified in the config exists 
+        checks if the table specified in the config exists 
         before carrying out any request
 
     */
@@ -60,7 +59,8 @@ class DynamoInit {
     const data = {
       TableName: this.table,
     }
-    const db = new Aws.DynamoDB()
+    const db = new Aws.DynamoDB.DocumentClient()
+
     const tableExists = await this.hasTable()
     if (!tableExists) return
     else {
@@ -71,7 +71,7 @@ class DynamoInit {
 
   public createNewItem = async (params: DbParams): Promise<any> => {
     this.dynamoConfig()
-    const db = new Aws.DynamoDB()
+    const db = new Aws.DynamoDB.DocumentClient()
     const data = {
       TableName: this.table,
       Item: params.item,
@@ -80,7 +80,7 @@ class DynamoInit {
 
     try {
       if (await this.hasTable()) {
-        res = await db.putItem(data).promise()
+        res = await db.put(data).promise()
       }
       return res
     } catch (error) {
@@ -108,7 +108,7 @@ class DynamoInit {
     this.dynamoConfig()
     let res
 
-    const db = new Aws.DynamoDB()
+    const db = new Aws.DynamoDB.DocumentClient()
     const data = {
       TableName: this.table,
       Key: {
@@ -118,7 +118,7 @@ class DynamoInit {
 
     try {
       if (await this.hasTable()) {
-        res = await db.getItem(data).promise()
+        res = await db.get(data).promise()
       }
       return res?.Item
     } catch (error) {
