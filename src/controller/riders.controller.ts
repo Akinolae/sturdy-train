@@ -1,20 +1,10 @@
-import { config } from 'dotenv'
-import { delivery } from './index.controller'
-import { response, validatorUtils } from '../utils/index.utils'
-import { StatusCodes } from 'http-status-codes'
 import DynamoInit from '../db/dynamo.db'
+import extractEnv from '../aws.config'
+import { delivery } from './index.controller'
+import { StatusCodes } from 'http-status-codes'
+import { response, validatorUtils } from '../utils/index.utils'
 
-config()
-
-const db = new DynamoInit(
-  {
-    accessKeyId: String(process.env.ACCESSKEY),
-    region: String(process.env.REGION),
-    secretKey: String(process.env.SECRETEKEY),
-    version: 'latest',
-  },
-  'riders'
-)
+const db = new DynamoInit(extractEnv(), 'riders')
 
 class Rider {
   /**

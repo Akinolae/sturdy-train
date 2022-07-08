@@ -1,16 +1,9 @@
-import { response } from '../utils/index.utils'
+import extractEnv from '../aws.config'
 import DynamoInit from '../db/dynamo.db'
+import { response } from '../utils/index.utils'
 import { StatusCodes } from 'http-status-codes'
 
-const db = new DynamoInit(
-  {
-    accessKeyId: String(process.env.ACCESSKEY),
-    region: String(process.env.REGION),
-    secretKey: String(process.env.SECRETEKEY),
-    version: 'latest',
-  },
-  'deliveries'
-)
+const db = new DynamoInit(extractEnv(), 'deliveries')
 
 class Delivery {
   /**

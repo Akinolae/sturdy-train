@@ -32,4 +32,5 @@ interface Tables {
 interface DbParams {
   item: any
 }
+
 export { Response, Orders, DynamoConfig, Rider, Tables, DbParams }
