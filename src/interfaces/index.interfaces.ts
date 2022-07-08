@@ -1,6 +1,6 @@
 interface Response {
   message: any
-  status: boolean
+  status?: boolean
   code?: number
   res: any
   data?: any
