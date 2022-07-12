@@ -13,4 +13,12 @@ const regSchema = Joi.object({
   password: Joi.string().min(8).max(16).trim().required(),
 })
 
-export default { regSchema }
+const login = Joi.object({
+  email: Joi.string()
+    .trim()
+    .email({ tlds: { allow: ['com'] } })
+    .required(),
+  userPassword: Joi.string().min(8).max(16).trim().required(),
+})
+
+export default { regSchema, login }

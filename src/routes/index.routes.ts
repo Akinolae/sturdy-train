@@ -4,9 +4,16 @@ import deliveryServices from '../services/delivery.services'
 
 const route = router.Router()
 
-route.get('/', rider.registerRider)
-route.get('/delivery', deliveryServices.getDelivery)
-route.post('/register-rider', rider.registerRider)
+/*
+rider routes
+*/
+route.get('/allRiders', rider.getAllRiders)
 route.get('/get-rider/:location', rider.getRider)
+route.post('/register-rider', rider.registerRider)
+route.post('/rider-login', rider.login)
 
+/* 
+delivery routes
+*/
+route.get('/delivery', deliveryServices.getDelivery)
 export { route }
