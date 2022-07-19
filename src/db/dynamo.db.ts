@@ -1,4 +1,5 @@
 import Aws from 'aws-sdk'
+import { Config, DynamoDB } from './index.db'
 import { DynamoConfig, Tables, DbParams } from '../interfaces/index.interfaces'
 
 class DynamoInit {
@@ -12,7 +13,8 @@ class DynamoInit {
 
   private dynamoConfig = (): any => {
     const { region, accessKeyId, secretKey } = this.config
-    const config = Aws.config.update({
+
+    const config = new Config().update({
       region: region,
       apiVersion: 'latest',
       credentials: {
@@ -45,7 +47,7 @@ class DynamoInit {
 
   private getTables = async (): Promise<object> => {
     this.dynamoConfig()
-    const db = new Aws.DynamoDB()
+    const db = new DynamoDB()
     try {
       const tables = await db.listTables().promise()
       return tables
@@ -59,7 +61,7 @@ class DynamoInit {
     const data = {
       TableName: this.table,
     }
-    const db = new Aws.DynamoDB.DocumentClient()
+    const db = new DynamoDB.DocumentClient()
 
     const tableExists = await this.hasTable()
     if (!tableExists) return
@@ -71,7 +73,7 @@ class DynamoInit {
 
   public createNewItem = async (params: DbParams): Promise<any> => {
     this.dynamoConfig()
-    const db = new Aws.DynamoDB.DocumentClient()
+    const db = new DynamoDB.DocumentClient()
     const data = {
       TableName: this.table,
       Item: params.item,
@@ -90,7 +92,7 @@ class DynamoInit {
 
   public queryDb = async (params: any): Promise<any> => {
     this.dynamoConfig()
-    const db = new Aws.DynamoDB()
+    const db = new DynamoDB()
     const data = {
       TableName: this.table,
       KeyConditionExpression: params.value,
@@ -108,7 +110,7 @@ class DynamoInit {
     this.dynamoConfig()
     let res
 
-    const db = new Aws.DynamoDB.DocumentClient()
+    const db = new DynamoDB.DocumentClient()
     const data = {
       TableName: this.table,
       Key: {
