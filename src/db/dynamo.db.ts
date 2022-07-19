@@ -1,4 +1,3 @@
-import Aws from 'aws-sdk'
 import { Config, DynamoDB } from './index.db'
 import { DynamoConfig, Tables, DbParams } from '../interfaces/index.interfaces'
 
